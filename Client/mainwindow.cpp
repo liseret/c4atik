@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     socket=new QTcpSocket(this);
     connect(socket,&QTcpSocket::readyRead,this,&MainWindow::SlotReadyRead);
     connect(socket,&QTcpSocket::disconnected,socket,&QTcpSocket::deleteLater);
+    DataSize=0;
 }
 
 MainWindow::~MainWindow()
@@ -24,7 +25,9 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::SendToServer(QString str){
     Data.clear();
     QDataStream out(&Data,QIODevice::WriteOnly);
-    out<<str;
+    out<<quint16(0)<<QTime::currentTime()<<str;
+    out.device()->seek(0);
+    out<<qint16(Data.size() - sizeof(qint16));
     socket->write(Data);
     ui->lineEdit->clear();
 }
@@ -33,9 +36,23 @@ void MainWindow::SlotReadyRead()
 {
     QDataStream in(socket);
     if (in.status()==QDataStream::Ok){
-        QString str;
-        in>>str;
-        ui->textBrowser->append(str);
+        for(;;){
+            if (DataSize==0){
+                if(socket->bytesAvailable()<2){
+                    break;
+                }
+                in>>DataSize;
+            }
+            if (socket->bytesAvailable()<DataSize){
+                break;
+            }
+            QString str;
+            QTime time;
+            in>>time>>str;
+            DataSize=0;
+            ui->textBrowser->append(time.toString() +" "+ str);
+
+        }
     }
     else{
         ui->textBrowser->append("read error :(");
