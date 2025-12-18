@@ -9,15 +9,10 @@ MainWindow::MainWindow(const QString &username,QTcpSocket *existingSocket,QWidge
 
 {
     ui->setupUi(this);
-    ///
     setWindowTitle("c4atik");
-    ///
     connect(socket,&QTcpSocket::readyRead,this,&MainWindow::SlotReadyRead);
     connect(socket,&QTcpSocket::disconnected,socket,&QTcpSocket::deleteLater);
     DataSize=0;
-    ///
-    ///
-    ///
 }
 
 MainWindow::~MainWindow()
@@ -26,8 +21,12 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::SendToServer(QString str){
+    if (str.isEmpty()){
+        return;
+    }
     Data.clear();
     QDataStream out(&Data,QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_15);
     out<<quint16(0)<<username<<QTime::currentTime()<<str;
     out.device()->seek(0);
     out<<qint16(Data.size() - sizeof(qint16));
@@ -38,6 +37,7 @@ void MainWindow::SendToServer(QString str){
 void MainWindow::SlotReadyRead()
 {
     QDataStream in(socket);
+    in.setVersion(QDataStream::Qt_5_15);
     if (in.status()==QDataStream::Ok){
         for(;;){
             if (DataSize==0){
@@ -54,7 +54,12 @@ void MainWindow::SlotReadyRead()
             QTime time;
             in>>user>>time>>str;
             DataSize=0;
-            ui->textBrowser->append("["+user +"]"+ " "+time.toString() +" "+ str);
+            if (user == "SERVER") {
+                ui->textBrowser->append("=== " + str + " ===");
+            }
+            else{
+                ui->textBrowser->append("["+user +"]"+ " "+time.toString() +" "+ str);
+            }
 
         }
     }

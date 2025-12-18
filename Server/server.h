@@ -16,7 +16,7 @@ private:
 
 public:
     server();
-    QTcpSocket *socket;
+    //QTcpSocket *socket;
 public slots:
     void incomingConnection(qintptr SoketDescription);
     void SlotReadyRead();
