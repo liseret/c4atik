@@ -34,10 +34,11 @@ void server::SlotReadyRead(){
                 break;
             }
             QString str;
+            QString user;
             QTime time;
-            in>>time>>str;
+            in>>user>>time>>str;
             DataSize=0;
-            SendToClient(str);
+            SendToClient(user,str);
             break;
 
         }
@@ -47,10 +48,10 @@ void server::SlotReadyRead(){
     }
 }
 
-void server::SendToClient(QString str){
+void server::SendToClient(QString username,QString str){
     Data.clear();
     QDataStream out(&Data,QIODevice::WriteOnly);
-    out<<quint16(0)<<QTime::currentTime()<<str;
+    out<<quint16(0)<<username<<QTime::currentTime()<<str;
     out.device()->seek(0);
     out<<qint16(Data.size() - sizeof(qint16));
     for (int i=0;i<Sockets.size();i++){

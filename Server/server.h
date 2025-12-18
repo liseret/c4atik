@@ -11,7 +11,7 @@ class server: public QTcpServer
 private:
     QVector<QTcpSocket*> Sockets;
     QByteArray Data;
-    void SendToClient(QString str);
+    void SendToClient(QString username, QString str);
     qint16 DataSize;
 
 public:
