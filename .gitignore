@@ -1,165 +1,107 @@
-# This file is used to ignore files which are generated
+# Игнорировать папки сборки (build directories)
+build-*/
+*/build-*
+build/
+*.build/
+Debug/
+Release/
+*.xcodeproj/
+*.vcxproj*
+*.sln
+*.suo
+*.user
+*.user.*
 
-# ----------------------------------------------------------------------------
-
-
-
-*~
-
+# Qt Creator специфика
 *.autosave
 
-*.a
-
-*.core
-
-*.moc
-
+# Скомпилированные и промежуточные файлы
 *.o
-
 *.obj
-
-*.orig
-
-*.rej
-
-*.so
-
-*.so.*
-
-*_pch.h.cpp
-
-*_resource.rc
-
-*.qm
-
-.#*
-
-*.*#
-
-core
-
-!core/
-
-tags
-
-.DS_Store
-
-.directory
-
-*.debug
-
-Makefile*
-
-*.prl
-
-*.app
-
+*.patch
+*.moc
 moc_*.cpp
-
+moc_*.cc
 ui_*.h
-
 qrc_*.cpp
-
-Thumbs.db
-
-*.res
-
-*.rc
-
-/.qmake.cache
-
-/.qmake.stash
-
-
-
-# qtcreator generated files
-
-*.pro.user*
-
-*.qbs.user*
-
-CMakeLists.txt.user*
-
-
-
-# xemacs temporary files
-
-*.flc
-
-
-
-# Vim temporary files
-
-.*.swp
-
-
-
-# Visual Studio generated files
-
-*.ib_pdb_index
-
-*.idb
-
-*.ilk
-
+*.qm
+Makefile*
+*.exe
+*.app
+*.dll
+*.so
+*.so.*
+*.dylib
+*.a
+*.lib
 *.pdb
-
-*.sln
-
+*.idb
+*.ilk
+*.exp
 *.suo
-
-*.vcproj
-
-*vcproj.*.*.user
-
 *.ncb
-
 *.sdf
 
-*.opensdf
+# Папки сборки Qt
+*.pro.user
+*.pro.user.*
+*.qmlc
+*.jaml
+*.qrc.depends
 
-*.vcxproj
+# Папки, создаваемые CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+_deps/
+*.cmake
 
-*vcxproj.*
+# Папки, создаваемые QMake
+*.qmake.stash
+.qmake.stash
+*.qmake.cache
 
+# Локальные настройки и кэши
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
 
+# Системные и временные файлы
+*.log
+*.tmp
+*.temp
+*.pid
 
-# MinGW generated files
-
-*.Debug
-
-*.Release
-
-
-
-# Python byte code
-
-*.pyc
-
-
-
-# Binaries
-
-# --------
-
-*.dll
-
-*.exe
-
-
-
-# Directories with generated files
-
-.moc/
-
-.obj/
-
-.pch/
-
-.rcc/
-
-.uic/
-
-build/
-build-*/
-
+# Исключения для исходного кода и проектных файлов
+!*.pro
+!*.pri
+!*.prf
+!*.qrc
+!*.ui
+!*.cpp
+!*.h
+!*.hpp
+!*.c
+!*.cc
+!*.cxx
+!*.rc
+!*.res
+!*.ts
+!*.qml
+!*.js
+!*.json
+!*.xml
+!*.svg
+!*.png
+!*.jpg
+!*.ico
+!*.md
+!CMakeLists.txt
+!*.cmake
+!*.txt
